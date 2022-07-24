@@ -13,6 +13,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Seed
             modelBuilder.Entity<Models.BasketProduct>()
                 .HasData(new Models.BasketProduct
                 {
+                    Id = 1,
                     ShoppingBasketId = 1,
                     ProductId = 1,
                     Quantity = 1,
@@ -22,6 +23,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Seed
             modelBuilder.Entity<Models.BasketProduct>()
                 .HasData(new Models.BasketProduct
                 {
+                    Id = 2,
                     ShoppingBasketId = 1,
                     ProductId = 2,
                     Quantity = 1,
@@ -31,6 +33,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Seed
             modelBuilder.Entity<Models.BasketProduct>()
                 .HasData(new Models.BasketProduct
                 {
+                    Id = 3,
                     ShoppingBasketId = 1,
                     ProductId = 3,
                     Quantity = 1,

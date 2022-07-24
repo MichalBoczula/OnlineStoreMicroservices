@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStoreMicroservices.ShoppingCart.Abstract;
 using OnlineStoreMicroservices.ShoppingCart.Context.Seed;
 using OnlineStoreMicroservices.ShoppingCart.Models;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Context
 {
-    public class ShoppingCartDbContext : DbContext
+    public class ShoppingCartDbContext : DbContext, IShoppingCartDbContext
     {
         public ShoppingCartDbContext(DbContextOptions<ShoppingCartDbContext> options) : base(options)
         {

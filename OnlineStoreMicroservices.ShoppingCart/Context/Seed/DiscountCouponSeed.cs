@@ -17,6 +17,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Seed
             modelBuilder.Entity<Models.DiscountCoupon>()
                 .HasData(new Models.DiscountCoupon
                 {
+                    Id = 1,
                     IntegrationId = guid1,
                     Code = "ten",
                     Amount = 10,
@@ -26,6 +27,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Seed
             modelBuilder.Entity<Models.DiscountCoupon>()
                 .HasData(new Models.DiscountCoupon
                 {
+                    Id = 2,
                     IntegrationId = guid2,
                     Code = "twenty",
                     Amount = 20,
@@ -35,6 +37,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Seed
             modelBuilder.Entity<Models.DiscountCoupon>()
                 .HasData(new Models.DiscountCoupon
                 {
+                    Id =3,
                     IntegrationId = guid3,
                     Code = "thirty",
                     Amount = 30,

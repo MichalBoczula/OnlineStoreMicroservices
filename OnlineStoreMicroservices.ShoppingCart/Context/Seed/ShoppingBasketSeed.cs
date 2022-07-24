@@ -13,6 +13,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Seed
             modelBuilder.Entity<Models.ShoppingBasket>()
                 .HasData(new Models.ShoppingBasket
                 {
+                    Id = 1,
                     DiscountCouponId = "",
                     Total = 450
                 });
