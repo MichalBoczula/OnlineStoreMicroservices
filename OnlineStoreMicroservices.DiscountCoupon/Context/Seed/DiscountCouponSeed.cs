@@ -16,30 +16,33 @@ namespace OnlineStoreMicroservices.DiscountCoupon.Context.Seed
 
             modelBuilder.Entity<Models.DiscountCoupon>()
                 .HasData(new Models.DiscountCoupon
-            {
-                IntegrationId = guid1,
-                Code = "ten",
-                Amount = 10,
-                IsActual = true
-            });
+                {
+                    Id = 1,
+                    IntegrationId = guid1,
+                    Code = "ten",
+                    Amount = 10,
+                    IsActual = true
+                });
 
             modelBuilder.Entity<Models.DiscountCoupon>()
                 .HasData(new Models.DiscountCoupon
-            {
-                IntegrationId = guid2,
-                Code = "twenty",
-                Amount = 20,
-                IsActual = true
-            });
+                {
+                    Id = 2,
+                    IntegrationId = guid2,
+                    Code = "twenty",
+                    Amount = 20,
+                    IsActual = true
+                });
 
             modelBuilder.Entity<Models.DiscountCoupon>()
                 .HasData(new Models.DiscountCoupon
-            {
-                IntegrationId = guid3,
-                Code = "thirty",
-                Amount = 30,
-                IsActual = true
-            });
+                {
+                    Id = 3,
+                    IntegrationId = guid3,
+                    Code = "thirty",
+                    Amount = 30,
+                    IsActual = true
+                });
         }
     }
 }

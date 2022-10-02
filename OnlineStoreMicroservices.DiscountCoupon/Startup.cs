@@ -2,11 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OnlineStoreMicroservices.DiscountCoupon.Context;
+using OnlineStoreMicroservices.MessageBus.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +29,16 @@ namespace OnlineStoreMicroservices.DiscountCoupon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OnlineStoreMicroservices.DiscountCoupon", Version = "v1" });
             });
+            services.AddDbContext<DiscountCouponDbContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddMessageBus();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

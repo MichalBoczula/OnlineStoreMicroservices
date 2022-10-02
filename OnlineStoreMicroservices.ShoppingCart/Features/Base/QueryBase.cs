@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using OnlineStoreMicroservices.ShoppingCart.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Features.Base
 {

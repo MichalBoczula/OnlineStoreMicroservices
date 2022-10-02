@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OnlineStoreMicroservices.MessageBus.Dependencies;
 using OnlineStoreMicroservices.ShoppingCart.Abstract;
 using OnlineStoreMicroservices.ShoppingCart.Context;
 using OnlineStoreMicroservices.ShoppingCart.Features.Queries;
@@ -44,6 +45,7 @@ namespace OnlineStoreMicroservices.ShoppingCart
             services.AddTransient<IShoppingCartDbContext, ShoppingCartDbContext>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMessageBus();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreMicroservices.ShoppingCart", "OnlineStoreMicroservices.ShoppingCart\OnlineStoreMicroservices.ShoppingCart.csproj", "{D94C6011-54CF-4D49-9C11-1A5AA4F9DEF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.ShoppingCart", "OnlineStoreMicroservices.ShoppingCart\OnlineStoreMicroservices.ShoppingCart.csproj", "{D94C6011-54CF-4D49-9C11-1A5AA4F9DEF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreMicroservices.DiscountCoupon", "OnlineStoreMicroservices.DiscountCoupon\OnlineStoreMicroservices.DiscountCoupon.csproj", "{F5C123A1-6E24-4C7B-B365-415437CF7EC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.DiscountCoupon", "OnlineStoreMicroservices.DiscountCoupon\OnlineStoreMicroservices.DiscountCoupon.csproj", "{F5C123A1-6E24-4C7B-B365-415437CF7EC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreMicroservices.MessageBus", "OnlineStoreMicroservices.MessageBus\OnlineStoreMicroservices.MessageBus.csproj", "{BA6EFAF1-ADF0-421F-82C6-E34E915478DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F5C123A1-6E24-4C7B-B365-415437CF7EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5C123A1-6E24-4C7B-B365-415437CF7EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5C123A1-6E24-4C7B-B365-415437CF7EC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA6EFAF1-ADF0-421F-82C6-E34E915478DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6EFAF1-ADF0-421F-82C6-E34E915478DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6EFAF1-ADF0-421F-82C6-E34E915478DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6EFAF1-ADF0-421F-82C6-E34E915478DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
