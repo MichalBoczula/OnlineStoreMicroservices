@@ -31,7 +31,12 @@ namespace OnlineStoreMicroservices.ShoppingCart.Controllers
                        new BasketProductForCreationDto()
                        {
                            ProductId = 1,
-                           ShoppingBasketId = 1,
+                           Quantity = 1,
+                           Total = 10
+                       },
+                        new BasketProductForCreationDto()
+                       {
+                           ProductId = 2,
                            Quantity = 1,
                            Total = 10
                        }

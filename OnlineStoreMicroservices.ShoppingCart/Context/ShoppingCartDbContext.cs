@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using OnlineStoreMicroservices.ShoppingCart.Abstract;
 using OnlineStoreMicroservices.ShoppingCart.Context.Seed;
 using OnlineStoreMicroservices.ShoppingCart.Models;
@@ -35,6 +36,21 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<IDbContextTransaction> BeginTransaction()
+        {
+            return await this.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitTransaction(IDbContextTransaction Transaction, CancellationToken cancellationToken)
+        {
+            await Transaction.CommitAsync(cancellationToken);
+        }
+
+        public async Task RollbackTransaction(IDbContextTransaction Transaction, CancellationToken cancellationToken)
+        {
+            await Transaction.RollbackAsync(cancellationToken);
         }
     }
 }

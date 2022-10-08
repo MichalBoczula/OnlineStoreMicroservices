@@ -18,9 +18,17 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
 
         public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+            var transaction = await _context.BeginTransaction();
+
             var shoppingCart = _mapper.Map<ShoppingBasketForCreationDto, ShoppingBasket>(request.ShoppingCart);
             await _context.ShoppingBaskets.AddAsync(shoppingCart);
-            var shoppingCartId = await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            
+            if (shoppingCart.Id <= 0)
+            {
+                await _context.RollbackTransaction(transaction, cancellationToken);
+                return false;
+            }
 
             var products = _mapper.Map<List<BasketProductForCreationDto>, List<BasketProduct>>(request.ShoppingCart.BasketProducts);
             products = products.Select(x => new BasketProduct()
@@ -33,7 +41,15 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
             await _context.BasketProducts.AddRangeAsync(products);
             var result = await _context.SaveChangesAsync(cancellationToken);
 
-            return result > 0;
+            if (result != products.Count)
+            {
+                await _context.RollbackTransaction(transaction, cancellationToken);
+                return false;
+            }
+
+            await _context.CommitTransaction(transaction, cancellationToken);
+
+            return true;
         }
     }
 }

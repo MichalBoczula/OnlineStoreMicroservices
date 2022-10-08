@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using OnlineStoreMicroservices.ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,8 @@ namespace OnlineStoreMicroservices.ShoppingCart.Abstract
         DbSet<Product> Products { get; set; }
         DbSet<BasketProduct> BasketProducts { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<IDbContextTransaction> BeginTransaction();
+        Task CommitTransaction(IDbContextTransaction Transaction, CancellationToken cancellationToken);
+        Task RollbackTransaction(IDbContextTransaction Transaction, CancellationToken cancellationToken);
     }
 }
