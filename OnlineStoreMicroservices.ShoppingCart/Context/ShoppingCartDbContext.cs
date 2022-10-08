@@ -5,6 +5,7 @@ using OnlineStoreMicroservices.ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Context
@@ -29,6 +30,11 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context
             modelBuilder.CreateShoppingBasketSeed();
             modelBuilder.CreateProductSeed();
             modelBuilder.CreateBasketProductSeed();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

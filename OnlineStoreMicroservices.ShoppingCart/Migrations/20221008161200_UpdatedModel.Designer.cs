@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStoreMicroservices.ShoppingCart.Context;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    partial class ShoppingCartDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221008161200_UpdatedModel")]
+    partial class UpdatedModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,8 @@ namespace OnlineStoreMicroservices.ShoppingCart.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.HasIndex("ShoppingBasketId");
 
@@ -183,8 +186,8 @@ namespace OnlineStoreMicroservices.ShoppingCart.Migrations
             modelBuilder.Entity("OnlineStoreMicroservices.ShoppingCart.Models.BasketProduct", b =>
                 {
                     b.HasOne("OnlineStoreMicroservices.ShoppingCart.Models.Product", "ProductRef")
-                        .WithMany("BasketProducts")
-                        .HasForeignKey("ProductId")
+                        .WithOne("BasketProductRef")
+                        .HasForeignKey("OnlineStoreMicroservices.ShoppingCart.Models.BasketProduct", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -201,7 +204,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineStoreMicroservices.ShoppingCart.Models.Product", b =>
                 {
-                    b.Navigation("BasketProducts");
+                    b.Navigation("BasketProductRef");
                 });
 
             modelBuilder.Entity("OnlineStoreMicroservices.ShoppingCart.Models.ShoppingBasket", b =>

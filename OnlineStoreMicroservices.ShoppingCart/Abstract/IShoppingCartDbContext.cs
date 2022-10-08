@@ -3,6 +3,7 @@ using OnlineStoreMicroservices.ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Abstract
@@ -13,5 +14,6 @@ namespace OnlineStoreMicroservices.ShoppingCart.Abstract
         DbSet<DiscountCoupon> DiscountCoupons { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<BasketProduct> BasketProducts { get; set; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

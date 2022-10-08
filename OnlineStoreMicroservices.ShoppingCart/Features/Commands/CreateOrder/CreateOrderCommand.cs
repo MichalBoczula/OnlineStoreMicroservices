@@ -1,6 +1,9 @@
-﻿namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
+﻿using MediatR;
+
+namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
 {
-    public class CreateOrderCommand
+    public class CreateOrderCommand : IRequest<bool>
     {
+        public ShoppingBasketForCreationDto ShoppingCart { get; set; }
     }
 }

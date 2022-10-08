@@ -14,8 +14,8 @@ namespace OnlineStoreMicroservices.ShoppingCart.Context.Configuration
         {
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.ProductRef)
-                .WithOne(x => x.BasketProductRef)
-                .HasForeignKey<BasketProduct>(x => x.ProductId);
+                .WithMany(x => x.BasketProducts)
+                .HasForeignKey(x => x.ProductId);
             builder.HasOne(x => x.ShoppingBasketRef)
                .WithMany(x => x.BasketProducts)
                .HasForeignKey(x => x.ShoppingBasketId);

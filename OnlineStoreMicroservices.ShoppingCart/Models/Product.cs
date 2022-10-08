@@ -10,6 +10,6 @@ namespace OnlineStoreMicroservices.ShoppingCart.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public BasketProduct BasketProductRef { get; set; }
+        public List<BasketProduct> BasketProducts { get; set; }
     }
 }

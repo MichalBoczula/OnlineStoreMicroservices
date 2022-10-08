@@ -11,9 +11,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Models
         public int ProductId { get; set; }
         public Product ProductRef { get; set; }
         public int Quantity { get; set; }
-        public decimal Total { get; set; }
         public int ShoppingBasketId { get; set; }
         public ShoppingBasket ShoppingBasketRef { get; set; }
-
     }
 }

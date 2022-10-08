@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder;
 using OnlineStoreMicroservices.ShoppingCart.Features.Queries.GetShoppingBasket;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Controllers
@@ -15,13 +13,31 @@ namespace OnlineStoreMicroservices.ShoppingCart.Controllers
         [HttpGet("{basketId}")]
         public async Task<ActionResult> GetShoppingBasketByIdAsync(int basketId)
         {
-            var result = await Mediator.Send(new GetShoppingBasketByIdQuery() { Id = basketId});
+            var result = await Mediator.Send(new GetShoppingBasketByIdQuery() { Id = basketId });
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddShoppingBasketByIdAsync(int basketId)
+        [HttpPost("add")]
+        public async Task<ActionResult> AddShoppingBasketByIdAsync()
         {
+            var result = await Mediator.Send(new CreateOrderCommand()
+            {
+                ShoppingCart = new ShoppingBasketForCreationDto()
+                {
+                    DiscountCouponId = "",
+                    Total = 10,
+                    BasketProducts = new List<BasketProductForCreationDto>()
+                    {
+                       new BasketProductForCreationDto()
+                       {
+                           ProductId = 1,
+                           ShoppingBasketId = 1,
+                           Quantity = 1,
+                           Total = 10
+                       }
+                    }
+                }
+            });
             return Ok();
         }
     }
