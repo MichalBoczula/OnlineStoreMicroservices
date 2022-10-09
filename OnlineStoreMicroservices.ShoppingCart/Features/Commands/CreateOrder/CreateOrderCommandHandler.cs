@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using OnlineStoreMicroservices.ShoppingCart.Abstract;
+using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
 using OnlineStoreMicroservices.ShoppingCart.Features.Base;
 using OnlineStoreMicroservices.ShoppingCart.Models;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
             var shoppingCart = _mapper.Map<ShoppingBasketForCreationDto, ShoppingBasket>(request.ShoppingCart);
             await _context.ShoppingBaskets.AddAsync(shoppingCart);
             await _context.SaveChangesAsync(cancellationToken);
-            
+
             if (shoppingCart.Id <= 0)
             {
                 await _context.RollbackTransaction(transaction, cancellationToken);

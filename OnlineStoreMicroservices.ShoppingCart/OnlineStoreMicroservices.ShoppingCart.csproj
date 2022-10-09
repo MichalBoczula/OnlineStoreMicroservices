@@ -21,4 +21,8 @@
     <ProjectReference Include="..\OnlineStoreMicroservices.MessageBus\OnlineStoreMicroservices.MessageBus.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Behaviors\" />
+  </ItemGroup>
+
 </Project>

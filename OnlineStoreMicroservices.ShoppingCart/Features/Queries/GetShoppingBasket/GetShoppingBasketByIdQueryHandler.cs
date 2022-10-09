@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using OnlineStoreMicroservices.ShoppingCart.Abstract;
+using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
 using OnlineStoreMicroservices.ShoppingCart.Features.Base;
 using System.Linq;
 using System.Threading;

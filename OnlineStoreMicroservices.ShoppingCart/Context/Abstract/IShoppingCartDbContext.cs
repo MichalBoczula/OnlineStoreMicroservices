@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OnlineStoreMicroservices.ShoppingCart.Abstract
+namespace OnlineStoreMicroservices.ShoppingCart.Context.Abstract
 {
     public interface IShoppingCartDbContext
     {

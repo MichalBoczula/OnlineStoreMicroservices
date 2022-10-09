@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using OnlineStoreMicroservices.ShoppingCart.Abstract;
+using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
 using OnlineStoreMicroservices.ShoppingCart.Context.Seed;
 using OnlineStoreMicroservices.ShoppingCart.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

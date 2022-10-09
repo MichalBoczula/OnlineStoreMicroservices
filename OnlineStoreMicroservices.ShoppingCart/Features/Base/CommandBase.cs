@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using OnlineStoreMicroservices.ShoppingCart.Abstract;
+using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Features.Base
 {

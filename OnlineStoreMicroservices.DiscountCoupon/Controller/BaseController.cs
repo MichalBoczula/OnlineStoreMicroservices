@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace OnlineStoreMicroservices.ShoppingCart.Controllers
+namespace OnlineStoreMicroservices.DiscountCoupon.Controller
 {
     [ApiController]
     public abstract class BaseController : ControllerBase

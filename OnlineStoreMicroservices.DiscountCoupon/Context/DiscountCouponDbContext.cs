@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStoreMicroservices.DiscountCoupon.Context.Abstract;
 using OnlineStoreMicroservices.DiscountCoupon.Context.Seed;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.DiscountCoupon.Context
 {
-    public class DiscountCouponDbContext : DbContext
+    public class DiscountCouponDbContext : DbContext, IDiscountCouponDbContext
     {
         public DiscountCouponDbContext(DbContextOptions<DiscountCouponDbContext> options) : base(options)
         {
@@ -21,6 +20,11 @@ namespace OnlineStoreMicroservices.DiscountCoupon.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.CreateDiscountCouponSeed();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }
