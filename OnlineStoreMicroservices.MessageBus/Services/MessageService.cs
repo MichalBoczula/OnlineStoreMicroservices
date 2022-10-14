@@ -8,45 +8,56 @@ using System.Text;
 
 namespace MessageBus.Services
 {
-    internal class MessageHandler : IMessageHandler
+    internal class MessageService : IMessageService
     {
-        private readonly IModel _channel;
-        private readonly EventingBasicConsumer _consumer;
+        private readonly ConnectionFactory _factory;
         private const string _exchange = "OnlineStoreMicroServicesExchange";
 
-        public MessageHandler()
+        public MessageService()
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            _factory = new ConnectionFactory() { HostName = "localhost" };
 
-            using var connection = factory.CreateConnection();
+            using var connection = _factory.CreateConnection();
             using var channel = connection.CreateModel();
-            _channel = channel;
-            _consumer = new EventingBasicConsumer(channel);
 
-            var discountCouponHeader = new Dictionary<string, object>
+            var updateOrder = new Dictionary<string, object>
             {
-                { "UpdateDiscountCoupon", "DiscountCoupon" },
+                { "Order", "UpdateOrder" },
             };
             var shoppingCartHeader = new Dictionary<string, object>
             {
-                { "UpdateDiscountCoupon", "ShoppingCart" },
+                { "UpdateDiscountCoupon", "coupon" },
             };
+            var correlation = new Dictionary<string, object>
+             {
+                 { "MachineState", "Correlation" },
+             };
 
             channel.ExchangeDeclare(_exchange, ExchangeType.Headers, true, false, null);
             channel.QueueDeclare("UpdateDiscountCoupon_DiscountCoupon", true, false, false);
-            channel.QueueDeclare("UpdateDiscountCoupon_ShoppingCart", true, false, false);
-            channel.QueueBind("UpdateDiscountCoupon_DiscountCoupon", _exchange, string.Empty, discountCouponHeader);
-            channel.QueueBind("UpdateDiscountCoupon_ShoppingCart", _exchange, string.Empty, shoppingCartHeader);
+            channel.QueueDeclare("UpdateOrder_AccountantsDepartment", true, false, false);
+            channel.QueueDeclare("UpdateOrder_Warehouse", true, false, false);
+            channel.QueueDeclare("SendInformationAboutOrder", true, false, false);
+            channel.QueueBind("UpdateDiscountCoupon_DiscountCoupon", _exchange, string.Empty, shoppingCartHeader);
+            channel.QueueBind("UpdateOrder_AccountantsDepartment", _exchange, string.Empty, updateOrder);
+            channel.QueueBind("UpdateOrder_Warehouse", _exchange, string.Empty, updateOrder);
+            channel.QueueBind("SendInformationAboutOrder", _exchange, string.Empty, correlation);
         }
 
-        public bool SendMessage(string message, IBasicProperties props)
+        public bool SendMessage(string message, Dictionary<string, object> header, string exchange)
         {
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
             var response = true;
 
+            using var connection = _factory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            var props = channel.CreateBasicProperties();
+            props.Headers = header;
+
             try
             {
-                _channel.BasicPublish(exchange: _exchange,
+                channel.BasicPublish(exchange: exchange,
                             routingKey: string.Empty,
                             basicProperties: props,
                             body: body);
@@ -61,15 +72,19 @@ namespace MessageBus.Services
 
         public string ConsumeMessage(string queue)
         {
+            using var connection = _factory.CreateConnection();
+            using var channel = connection.CreateModel();
+            var consumer = new EventingBasicConsumer(channel);
+
             string message = string.Empty;
 
             try
             {
-                _channel.BasicConsume(queue: queue,
+                channel.BasicConsume(queue: queue,
                                     autoAck: true,
-                                    consumer: _consumer);
+                                    consumer: consumer);
 
-                _consumer.Received += (sender, e) =>
+                consumer.Received += (sender, e) =>
                 {
                     var body = e.Body.ToArray();
                     message = Encoding.UTF8.GetString(body);
@@ -79,7 +94,7 @@ namespace MessageBus.Services
             {
 
             }
-            
+
             return message;
         }
     }

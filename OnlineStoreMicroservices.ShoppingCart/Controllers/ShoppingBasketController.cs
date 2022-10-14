@@ -4,16 +4,28 @@ using OnlineStoreMicroservices.ShoppingCart.Features.Queries.GetShoppingBasket;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using MessageBus.Services.Interfaces;
+
+using OnlineStoreMicroservices.ShoppingCart.Features.Services.SetCouponAsUnActive;
+
 namespace OnlineStoreMicroservices.ShoppingCart.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ShoppingBasketController : BaseController
     {
+        private readonly IMessageService _messageService;
+
+        public ShoppingBasketController(IMessageService messageService)
+        {
+            this._messageService = messageService;
+        }
+
         [HttpGet("{basketId}")]
         public async Task<ActionResult> GetShoppingBasketByIdAsync(int basketId)
         {
             var result = await Mediator.Send(new GetShoppingBasketByIdQuery() { Id = basketId });
+            await Mediator.Publish(new SetCouponAsUnActiveNotification() { DiscountCouponGuid = "1111" });
             return Ok(result);
         }
 

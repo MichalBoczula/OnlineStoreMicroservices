@@ -4,6 +4,6 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Services.SetCouponAsUnA
 {
     public class SetCouponAsUnActiveNotification : INotification
     {
-        public int DiscountCouponId { get; set; }
+        public string DiscountCouponGuid { get; set; }
     }
 }

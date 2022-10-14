@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using System.Collections.Generic;
+
+using MediatR;
 using MessageBus.Services.Interfaces;
 using OnlineStoreMicroservices.ShoppingCart.Features.Services.SetCouponAsUnActive;
 using System.Threading;
@@ -8,15 +10,21 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Notifications.SetCoupon
 {
     public class SetCouponAsUnActiveNotificationHandler : INotificationHandler<SetCouponAsUnActiveNotification>
     {
-        private readonly IMessageHandler _messageHandler;
+        private readonly IMessageService messageService;
 
-        public SetCouponAsUnActiveNotificationHandler(IMessageHandler messageHandler)
+        public SetCouponAsUnActiveNotificationHandler(IMessageService messageService)
         {
-            _messageHandler = messageHandler;
+            this.messageService = messageService;
         }
 
         public async Task Handle(SetCouponAsUnActiveNotification notification, CancellationToken cancellationToken)
         {
+            var shoppingCartHeader = new Dictionary<string, object>
+             {
+                 { "UpdateDiscountCoupon", "coupon" },
+             };
+            var exchange = "OnlineStoreMicroServicesExchange";
+            this.messageService.SendMessage(notification.DiscountCouponGuid, shoppingCartHeader, exchange);
         }
     }
 }
