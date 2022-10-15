@@ -14,7 +14,7 @@ namespace OnlineStoreMicroservices.MessageBus.Dependencies
     {
         public static IServiceCollection AddMessageBus(this IServiceCollection services)
         {
-            services.AddTransient<IMessageService, MessageService>();
+            services.AddSingleton<IMessageService, MessageService>();
             return services;
         }
     }

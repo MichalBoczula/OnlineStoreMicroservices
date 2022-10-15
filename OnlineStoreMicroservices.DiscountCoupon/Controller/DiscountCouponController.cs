@@ -2,6 +2,7 @@
 using OnlineStoreMicroservices.DiscountCoupon.Features.Command.ActivateCoupon;
 using OnlineStoreMicroservices.DiscountCoupon.Features.Command.DeactivateCoupon;
 using OnlineStoreMicroservices.DiscountCoupon.Features.Queries;
+using OnlineStoreMicroservices.DiscountCoupon.Services;
 using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.DiscountCoupon.Controller

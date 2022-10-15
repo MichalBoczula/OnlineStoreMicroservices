@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.Di
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.MessageBus", "OnlineStoreMicroservices.MessageBus\OnlineStoreMicroservices.MessageBus.csproj", "{BA6EFAF1-ADF0-421F-82C6-E34E915478DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreMicroservices.Warehouse", "OnlineStoreMicroservices.Warehouse\OnlineStoreMicroservices.Warehouse.csproj", "{481E32C3-5B68-4D73-B7A7-BE5399FF711C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.Warehouse", "OnlineStoreMicroservices.Warehouse\OnlineStoreMicroservices.Warehouse.csproj", "{481E32C3-5B68-4D73-B7A7-BE5399FF711C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreMicroservices.AccountantsDepartment", "OnlineStoreMicroservices.AccountantsDepartment\OnlineStoreMicroservices.AccountantsDepartment.csproj", "{86070FAB-8C9A-4CCD-852D-C2CC7CD927FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.AccountantsDepartment", "OnlineStoreMicroservices.AccountantsDepartment\OnlineStoreMicroservices.AccountantsDepartment.csproj", "{86070FAB-8C9A-4CCD-852D-C2CC7CD927FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreMicroservices.StateMachine", "OnlineStoreMicroservices.StateMachine\OnlineStoreMicroservices.StateMachine.csproj", "{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.StateMachine", "OnlineStoreMicroservices.StateMachine\OnlineStoreMicroservices.StateMachine.csproj", "{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService1", "WorkerService1\WorkerService1.csproj", "{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
