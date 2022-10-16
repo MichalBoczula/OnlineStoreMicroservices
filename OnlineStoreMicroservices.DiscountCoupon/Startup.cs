@@ -37,11 +37,10 @@ namespace OnlineStoreMicroservices.DiscountCoupon
             });
 
             services.AddTransient<IDiscountCouponDbContext, DiscountCouponDbContext>();
-            services.AddTransient<IRepo, Repo>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddMessageBus();
-            services.AddHostedService<HostedService>();
+            services.AddHostedService<EventConsumerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.Ac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMicroservices.StateMachine", "OnlineStoreMicroservices.StateMachine\OnlineStoreMicroservices.StateMachine.csproj", "{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService1", "WorkerService1\WorkerService1.csproj", "{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA7F5C01-E099-4545-87F9-7A6FF15A7D62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA3D42C8-086C-4661-8C81-9A2E4771DEB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
