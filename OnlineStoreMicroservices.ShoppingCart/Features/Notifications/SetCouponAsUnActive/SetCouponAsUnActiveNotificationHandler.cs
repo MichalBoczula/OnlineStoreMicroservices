@@ -24,7 +24,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Notifications.SetCoupon
                  { "UpdateDiscountCoupon", "coupon" },
              };
             var exchange = "OnlineStoreMicroServicesExchange";
-            this.messageService.SendMessage(notification.DiscountCouponGuid, shoppingCartHeader, exchange);
+            this.messageService.SendMessage(notification.DiscountCouponIntegrationId, shoppingCartHeader, exchange);
         }
     }
 }

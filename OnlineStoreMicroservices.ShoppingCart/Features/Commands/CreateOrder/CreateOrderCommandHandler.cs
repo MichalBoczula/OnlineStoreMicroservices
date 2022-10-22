@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
 {
-    public class CreateOrderCommandHandler : CommandBase, IRequestHandler<CreateOrderCommand, bool>
+    public class CreateOrderCommandHandler : CommandBase, IRequestHandler<CreateOrderCommand, CreateOrderCommandResult>
     {
         public CreateOrderCommandHandler(IShoppingCartDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
-        public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<CreateOrderCommandResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var transaction = await _context.BeginTransaction();
 
@@ -27,7 +27,12 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
             if (shoppingCart.Id <= 0)
             {
                 await _context.RollbackTransaction(transaction, cancellationToken);
-                return false;
+              
+                return new CreateOrderCommandResult
+                {
+                    Result = false,
+                    DiscoutCouponIntegrationId = string.Empty
+                };
             }
 
             var products = _mapper.Map<List<BasketProductForCreationDto>, List<BasketProduct>>(request.ShoppingCart.BasketProducts);
@@ -44,12 +49,21 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
             if (result != products.Count)
             {
                 await _context.RollbackTransaction(transaction, cancellationToken);
-                return false;
+                
+                return new CreateOrderCommandResult
+                {
+                    Result = false,
+                    DiscoutCouponIntegrationId = string.Empty
+                }; ;
             }
 
             await _context.CommitTransaction(transaction, cancellationToken);
 
-            return true;
+            return new CreateOrderCommandResult
+            {
+                Result = true,
+                DiscoutCouponIntegrationId = shoppingCart.DiscountCouponId
+            };
         }
     }
 }

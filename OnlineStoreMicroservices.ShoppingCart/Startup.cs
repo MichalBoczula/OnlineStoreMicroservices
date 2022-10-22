@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using OnlineStoreMicroservices.MessageBus.Dependencies;
+using OnlineStoreMicroservices.ShoppingCart.Behaviors;
 using OnlineStoreMicroservices.ShoppingCart.Context;
 using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
 using System.Reflection;
@@ -37,7 +39,11 @@ namespace OnlineStoreMicroservices.ShoppingCart
             services.AddTransient<IShoppingCartDbContext, ShoppingCartDbContext>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
             services.AddMessageBus();
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
