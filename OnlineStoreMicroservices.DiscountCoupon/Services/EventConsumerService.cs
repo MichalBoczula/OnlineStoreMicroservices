@@ -19,48 +19,42 @@ namespace OnlineStoreMicroservices.DiscountCoupon.Services
 {
     public class EventConsumerService : IHostedService
     {
-
         private readonly IServiceScopeFactory _scopeFactory;
+        private DiscountCouponDbContext dbContext;
+        private IMediator mediator;
+        private IConnection connection;
+        private IModel channel;
+        private EventingBasicConsumer consumer;
 
         public EventConsumerService(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
+            var scope = _scopeFactory.CreateScope();
+            dbContext = scope.ServiceProvider.GetRequiredService<DiscountCouponDbContext>();
+            mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            connection = factory.CreateConnection();
+            channel = connection.CreateModel();
+            consumer = new EventingBasicConsumer(channel);
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Task.Run(async () =>
             {
-                using (var scope = _scopeFactory.CreateScope())
+                channel.BasicConsume(queue: "UpdateDiscountCoupon_DiscountCoupon",
+                                   autoAck: true,
+                                   consumer: consumer);
+
+                consumer.Received += async (sender, e) =>
                 {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<DiscountCouponDbContext>();
-                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-
-                    var factory = new ConnectionFactory() { HostName = "localhost" };
-                    using var connection = factory.CreateConnection();
-                    using var channel = connection.CreateModel();
-
-                    var consumer = new EventingBasicConsumer(channel);
-
-                    while(!cancellationToken.IsCancellationRequested)
+                    var body = e.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+                    if (!string.IsNullOrWhiteSpace(message))
                     {
-                        var message = string.Empty;
-
-                        channel.BasicConsume(queue: "UpdateDiscountCoupon_DiscountCoupon",
-                                           autoAck: true,
-                                           consumer: consumer);
-
-                        consumer.Received += async (sender, e) =>
-                        {
-                            var body = e.Body.ToArray();
-                            message = Encoding.UTF8.GetString(body);
-                            if (!string.IsNullOrWhiteSpace(message))
-                            {
-                                await mediator.Send(new ActivateCouponCommand() { IntegrationId = message });
-                            }
-                        };
+                        await mediator.Send(new DeactivateCouponCommand() { IntegrationId = message });
                     }
-                }
+                };
             });
 
             return Task.CompletedTask;
@@ -68,6 +62,9 @@ namespace OnlineStoreMicroservices.DiscountCoupon.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            connection.Dispose();
+            channel.Dispose();
+            dbContext.Dispose();
             return Task.CompletedTask;
         }
     }
