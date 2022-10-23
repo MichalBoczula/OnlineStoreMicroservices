@@ -25,7 +25,6 @@ namespace OnlineStoreMicroservices.ShoppingCart.Controllers
         public async Task<ActionResult> GetShoppingBasketByIdAsync(int basketId)
         {
             var result = await Mediator.Send(new GetShoppingBasketByIdQuery() { Id = basketId });
-            //await Mediator.Publish(new SetCouponAsUnActiveNotification() { DiscountCouponIntegrationId = "1111" });
             return Ok(result);
         }
 
@@ -36,7 +35,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Controllers
             {
                 ShoppingCart = new ShoppingBasketForCreationDto()
                 {
-                    DiscountCouponId = "",
+                    DiscountCouponId = "e0cfebf1-5fa6-49d0-a726-c5c4b2ce3de9",
                     Total = 10,
                     BasketProducts = new List<BasketProductForCreationDto>()
                     {

@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using MediatR.Pipeline;
 using MessageBus.Services.Interfaces;
+using OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder;
 using OnlineStoreMicroservices.ShoppingCart.Features.Queries.GetShoppingBasket;
+using OnlineStoreMicroservices.ShoppingCart.Features.Services.SetCouponAsUnActive;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,23 +15,27 @@ namespace OnlineStoreMicroservices.ShoppingCart.Behaviors
 {
     public class NotificationBehavior<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
     {
-        private readonly IMessageService _messageService;
+        private readonly IMediator _mediator;
 
-        public NotificationBehavior(IMessageService messageService)
+        public NotificationBehavior(IMediator mediator)
         {
-            this._messageService = messageService;
+            _mediator = mediator;
         }
 
-        public Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
+        public async Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
         {
-            var a = request;
-            var t = response;
+            if (response is CreateOrderCommandResult)
+            {
+                var createOrderCommandResult = response as CreateOrderCommandResult;
 
-            var h = t as ShoppingBasketExternal;
-            
-            Debug.WriteLine("rawrrr");
-            
-            return Task.CompletedTask;
+                if (createOrderCommandResult.Result)
+                {
+                    await _mediator.Publish(new SetCouponAsUnActiveNotification()
+                    {
+                        DiscountCouponIntegrationId = createOrderCommandResult.DiscoutCouponIntegrationId
+                    });
+                }
+            }
         }
     }
 }

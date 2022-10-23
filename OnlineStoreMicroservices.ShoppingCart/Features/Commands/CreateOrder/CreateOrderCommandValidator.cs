@@ -19,7 +19,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
             {
                 if(!string.IsNullOrWhiteSpace(x))
                 {
-                    if(couponsIds.Contains(x))
+                    if(!couponsIds.Contains(x))
                     {
                         context.AddFailure(new ValidationFailure("ShoppingCart.DiscountCouponId", "DiscountCoupon doesn't exist."));
                     }
