@@ -9,6 +9,6 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Models
     {
         public int Id { get; set; }
         public List<BasketProduct> BasketProducts { get; set; }
-        public UserBill Bill { get; set; }
+        public UserBill UserBillRef { get; set; }
     }
 }

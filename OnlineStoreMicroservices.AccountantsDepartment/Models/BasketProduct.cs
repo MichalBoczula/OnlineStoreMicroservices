@@ -11,7 +11,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Models
         public int ProductId { get; set; }
         public Product ProductRef { get; set; }
         public int Quantity { get; set; }
-        public int ShoppingBasketId { get; set; }
+        public int UserBasketId { get; set; }
         public UserBasket UserBasketRef { get; set; }
     }
 }
