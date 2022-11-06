@@ -6,13 +6,15 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
 {
     public class BasketProductForCreationDto : IMapFrom<BasketProduct>
     {
-        public int Id { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<BasketProductForCreationDto, BasketProduct>();
+            profile.CreateMap<BasketProductForCreationDto, BasketProduct>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.ProductRef, opt => opt.Ignore())
+                .ForMember(x => x.UserBasketRef, opt => opt.Ignore());
         }
     }
 }

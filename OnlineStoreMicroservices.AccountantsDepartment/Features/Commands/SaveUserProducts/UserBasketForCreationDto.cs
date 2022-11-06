@@ -16,7 +16,9 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UserBasketForCreationDto, UserBasket>();
+            profile.CreateMap<UserBasketForCreationDto, UserBasket>()
+                .ForMember(x => x.BasketProducts, opt => opt.Ignore())
+                .ForMember(x => x.UserBillRef, opt => opt.Ignore());
         }
     }
 }

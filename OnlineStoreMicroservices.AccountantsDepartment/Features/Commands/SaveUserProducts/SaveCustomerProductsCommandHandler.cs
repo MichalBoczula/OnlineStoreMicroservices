@@ -35,12 +35,17 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
                 }
                 else
                 {
-                    var basketProducts = userBasket.BasketProducts;
-                    basketProducts.ForEach(x => x.UserBasketId = userBasket.Id);
+                    var basketProducts = request.UserBasket.BasketProducts
+                        .Select(x => new BasketProduct
+                        {
+                            ProductId = x.ProductId,
+                            Quantity = x.Quantity,
+                            UserBasketId = userBasket.Id
+                        }).ToList();
 
                     await _context.BasketProducts.AddRangeAsync(basketProducts);
 
-                    var userBill = userBasket.UserBillRef;
+                    var userBill = _mapper.Map<UserBill>(request.UserBasket.UserBillRef);
                     userBill.UserBasketId = userBasket.Id;
 
                     await _context.UserBills.AddAsync(userBill);

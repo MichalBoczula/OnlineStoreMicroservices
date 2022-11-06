@@ -6,7 +6,6 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Queries.GetUse
 {
     public class UserBillDto : IMapFrom<UserBill>
     {
-        public int Id { get; set; }
         public decimal Total { get; set; }
         public int Quantity { get; set; }
 

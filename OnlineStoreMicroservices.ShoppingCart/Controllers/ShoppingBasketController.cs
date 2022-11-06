@@ -14,13 +14,6 @@ namespace OnlineStoreMicroservices.ShoppingCart.Controllers
     [ApiController]
     public class ShoppingBasketController : BaseController
     {
-        private readonly IMessageService _messageService;
-
-        public ShoppingBasketController(IMessageService messageService)
-        {
-            this._messageService = messageService;
-        }
-
         [HttpGet("{basketId}")]
         public async Task<ActionResult> GetShoppingBasketByIdAsync(int basketId)
         {
