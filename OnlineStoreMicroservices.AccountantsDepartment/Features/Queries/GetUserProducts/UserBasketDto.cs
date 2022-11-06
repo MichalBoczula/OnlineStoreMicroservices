@@ -16,7 +16,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Queries.GetUse
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UserBasketDto, UserBasket>();
+            profile.CreateMap<UserBasket, UserBasketDto>();
         }
     }
 }

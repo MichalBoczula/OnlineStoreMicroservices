@@ -6,12 +6,13 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Queries.GetUse
 {
     public class UserBillDto : IMapFrom<UserBill>
     {
+        public int Id { get; set; }
         public decimal Total { get; set; }
         public int Quantity { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UserBillDto, UserBill>();
+            profile.CreateMap<UserBill, UserBillDto>();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Queries.GetUse
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<BasketProductDto, BasketProduct>();
+            profile.CreateMap<BasketProduct, BasketProductDto>();
         }
     }
 }

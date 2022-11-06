@@ -31,7 +31,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
                 if (userBasket.Id == 0)
                 {
                     await _context.RollbackTransaction(tran, cancellationToken);
-                    return 0;
+                    return result;
                 }
                 else
                 {
@@ -53,6 +53,8 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
                     await _context.SaveChangesAsync(cancellationToken);
 
                     await _context.CommitTransaction(tran, cancellationToken);
+
+                    result = userBasket.Id;
                 }
             }
             catch (Exception e)

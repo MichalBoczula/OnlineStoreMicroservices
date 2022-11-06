@@ -6,7 +6,6 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
 {
     public class UserBillForCreationDto : IMapFrom<UserBill>
     {
-        public int Id { get; set; }
         public decimal Total { get; set; }
         public int Quantity { get; set; }
 

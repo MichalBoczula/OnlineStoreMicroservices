@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveUserProducts;
+using OnlineStoreMicroservices.AccountantsDepartment.Features.Queries.GetUserProducts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Controllers
     public class AccountantsDepartmentController : BaseController
     {
         [HttpPost("add")]
-        public async Task<ActionResult> AddShoppingBasketByIdAsync()
+        public async Task<ActionResult> AddShoppingBasketAsync()
         {
             var obj = new UserBasketForCreationDto
             {
@@ -30,6 +31,14 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Controllers
                 }
             };
             var result = await Mediator.Send(new SaveCustomerProductsCommand() { UserBasket = obj});
+            return Ok(result);
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetShoppingBasketByIdAsync(int id)
+        {
+            var result = await Mediator.Send(new GetUserProductsQuery() { UserBasketId = id});
             return Ok(result);
         }
     }
