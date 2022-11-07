@@ -34,7 +34,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Behaviors
                 }
             }
  
-            return await next(); ;
+            return await next();
         }
     }
 }

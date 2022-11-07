@@ -7,7 +7,8 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
 {
     public class CreateOrderCommandResult
     {
-        public bool Result { get; set; }
+        public bool IsDiscount { get; set; }
         public string DiscoutCouponIntegrationId { get; set; }
+        public ShoppingBasketForCreationDto ShoppingCartToDistribute { get; set; }
     }
 }

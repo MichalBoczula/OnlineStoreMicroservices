@@ -46,10 +46,8 @@ namespace MessageBus.Services
 
         public bool SendMessage(string message, Dictionary<string, object> header, string exchange)
         {
-            var body = message is string ?
-                Encoding.UTF8.GetBytes(message) :
-                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
-            
+            var body = Encoding.UTF8.GetBytes(message);
+                
             var response = true;
 
             using var connection = _factory.CreateConnection();

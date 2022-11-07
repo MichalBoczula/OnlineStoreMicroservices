@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using OnlineStoreMicroservices.ShoppingCart.Features.Notifications.DistributeCustomerBasket;
+
 namespace OnlineStoreMicroservices.ShoppingCart.Behaviors
 {
     public class NotificationBehavior<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
@@ -28,11 +30,19 @@ namespace OnlineStoreMicroservices.ShoppingCart.Behaviors
             {
                 var createOrderCommandResult = response as CreateOrderCommandResult;
 
-                if (createOrderCommandResult.Result)
+                if (createOrderCommandResult.IsDiscount)
                 {
                     await _mediator.Publish(new SetCouponAsUnActiveNotification()
                     {
                         DiscountCouponIntegrationId = createOrderCommandResult.DiscoutCouponIntegrationId
+                    });
+                }
+
+                if (createOrderCommandResult.ShoppingCartToDistribute != null)
+                {
+                    await _mediator.Publish(new DistributeCustomerBasketNotification()
+                    {
+                        ShoppingCart = createOrderCommandResult.ShoppingCartToDistribute
                     });
                 }
             }

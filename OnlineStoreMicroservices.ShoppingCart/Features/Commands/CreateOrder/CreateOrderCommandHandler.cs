@@ -3,6 +3,7 @@ using MediatR;
 using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
 using OnlineStoreMicroservices.ShoppingCart.Features.Base;
 using OnlineStoreMicroservices.ShoppingCart.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,50 +21,45 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
         {
             var transaction = await _context.BeginTransaction();
 
-            var shoppingCart = _mapper.Map<ShoppingBasketForCreationDto, ShoppingBasket>(request.ShoppingCart);
-            await _context.ShoppingBaskets.AddAsync(shoppingCart);
-            await _context.SaveChangesAsync(cancellationToken);
-
-            if (shoppingCart.Id <= 0)
+            var commandResult = new CreateOrderCommandResult()
             {
-                await _context.RollbackTransaction(transaction, cancellationToken);
-              
+                IsDiscount = false,
+                DiscoutCouponIntegrationId = string.Empty,
+                ShoppingCartToDistribute = null
+            };
+
+            try
+            {
+                var shoppingCart = _mapper.Map<ShoppingBasketForCreationDto, ShoppingBasket>(request.ShoppingCart);
+                await _context.ShoppingBaskets.AddAsync(shoppingCart);
+                await _context.SaveChangesAsync(cancellationToken);
+
+                var products = _mapper.Map<List<BasketProductForCreationDto>, List<BasketProduct>>(request.ShoppingCart.BasketProducts);
+                products = products.Select(x => new BasketProduct()
+                {
+                    ProductId = x.ProductId,
+                    ShoppingBasketId = shoppingCart.Id,
+                    Quantity = x.Quantity,
+                }).ToList();
+
+                await _context.BasketProducts.AddRangeAsync(products);
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                await _context.CommitTransaction(transaction, cancellationToken);
+
                 return new CreateOrderCommandResult
                 {
-                    Result = false,
-                    DiscoutCouponIntegrationId = string.Empty
+                    IsDiscount = !string.IsNullOrWhiteSpace(request.ShoppingCart.DiscountCouponId),
+                    DiscoutCouponIntegrationId = string.IsNullOrWhiteSpace(shoppingCart.DiscountCouponId) ? string.Empty : shoppingCart.DiscountCouponId,
+                    ShoppingCartToDistribute = request.ShoppingCart
                 };
             }
-
-            var products = _mapper.Map<List<BasketProductForCreationDto>, List<BasketProduct>>(request.ShoppingCart.BasketProducts);
-            products = products.Select(x => new BasketProduct()
-            {
-                ProductId = x.ProductId,
-                ShoppingBasketId = shoppingCart.Id,
-                Quantity = x.Quantity,
-            }).ToList();
-
-            await _context.BasketProducts.AddRangeAsync(products);
-            var result = await _context.SaveChangesAsync(cancellationToken);
-
-            if (result != products.Count)
+            catch (Exception e)
             {
                 await _context.RollbackTransaction(transaction, cancellationToken);
-                
-                return new CreateOrderCommandResult
-                {
-                    Result = false,
-                    DiscoutCouponIntegrationId = string.Empty
-                }; ;
+                throw;
             }
-
-            await _context.CommitTransaction(transaction, cancellationToken);
-
-            return new CreateOrderCommandResult
-            {
-                Result = true,
-                DiscoutCouponIntegrationId = shoppingCart.DiscountCouponId
-            };
         }
     }
 }
