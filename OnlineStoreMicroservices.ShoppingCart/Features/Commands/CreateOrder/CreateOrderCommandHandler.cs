@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
 {
     public class CreateOrderCommandHandler : CommandBase, IRequestHandler<CreateOrderCommand, CreateOrderCommandResult>
@@ -20,13 +22,6 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
         public async Task<CreateOrderCommandResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var transaction = await _context.BeginTransaction();
-
-            var commandResult = new CreateOrderCommandResult()
-            {
-                IsDiscount = false,
-                DiscoutCouponIntegrationId = string.Empty,
-                ShoppingCartToDistribute = null
-            };
 
             try
             {
@@ -46,6 +41,8 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
 
                 await _context.SaveChangesAsync(cancellationToken);
 
+                await SetCouponAsUnActive(request.ShoppingCart.DiscountCouponId, cancellationToken);
+
                 await _context.CommitTransaction(transaction, cancellationToken);
 
                 return new CreateOrderCommandResult
@@ -59,6 +56,17 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
             {
                 await _context.RollbackTransaction(transaction, cancellationToken);
                 throw;
+            }
+        }
+
+        private async Task SetCouponAsUnActive(string integrationId, CancellationToken cancellationToken)
+        {
+            if (!string.IsNullOrWhiteSpace(integrationId))
+            {
+                var coupon = await this._context.DiscountCoupons.FirstOrDefaultAsync(x => x.IntegrationId == integrationId);
+                coupon.IsActual = false;
+                await _context.DiscountCoupons.AddAsync(coupon);
+                await _context.SaveChangesAsync(cancellationToken);
             }
         }
     }
