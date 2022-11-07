@@ -65,7 +65,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
             {
                 var coupon = await this._context.DiscountCoupons.FirstOrDefaultAsync(x => x.IntegrationId == integrationId);
                 coupon.IsActual = false;
-                await _context.DiscountCoupons.AddAsync(coupon);
+                _context.DiscountCoupons.Update(coupon);
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

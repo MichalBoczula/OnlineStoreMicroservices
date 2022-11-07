@@ -1,7 +1,10 @@
-﻿using OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveUserProducts;
+﻿using MediatR;
+using MediatR.Pipeline;
+using OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveUserProducts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OnlineStoreMicroservices.AccountantsDepartment.Behaviors
@@ -15,9 +18,9 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Behaviors
             _mediator = mediator;
         }
 
-        public async Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
+        public Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,16 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
+using OnlineStoreMicroservices.ShoppingCart.Features.Base;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Features.Notifications.DistributeCustomerBasket
 {
-    public class DistributeCustomerBasketNotificationHandler : INotificationHandler<DistributeCustomerBasketNotification>
+    public class DistributeCustomerBasketNotificationHandler : NotificationBase, INotificationHandler<DistributeCustomerBasketNotification>
     {
-        private readonly IMessageService messageService;
-
-        public DistributeCustomerBasketNotificationHandler(IMessageService messageService)
+        public DistributeCustomerBasketNotificationHandler(IMessageService messageService) : base(messageService)
         {
-            this.messageService = messageService;
         }
 
         public async Task Handle(DistributeCustomerBasketNotification notification, CancellationToken cancellationToken)
