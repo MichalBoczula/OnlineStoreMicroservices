@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineStoreMicroservices.Warehouse.Features.Commands.SaveUserProducts;
+using OnlineStoreMicroservices.Warehouse.Features.Queries.GetUsersProducts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,8 @@ namespace OnlineStoreMicroservices.Warehouse.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetShoppingBasketByIdAsync(int id)
         {
-            throw new NotImplementedException();
-            //var result = await Mediator.Send(new GetUserProductsQuery() { UserBasketId = id });
-            //return Ok(result);
+            var result = await Mediator.Send(new GetUsersProductsQuery() { Id = id });
+            return Ok(result);
         }
     }
 }
