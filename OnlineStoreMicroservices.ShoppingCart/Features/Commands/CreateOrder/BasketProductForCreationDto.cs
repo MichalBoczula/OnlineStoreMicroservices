@@ -17,7 +17,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<BasketProductForCreationDto, BasketProduct>();
+            profile.CreateMap<BasketProductForCreationDto, BasketProduct>().ReverseMap();
         }
     }
 }

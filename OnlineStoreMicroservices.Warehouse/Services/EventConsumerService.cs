@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OnlineStoreMicroservices.AccountantsDepartment.Context;
-using OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveUserProducts;
-using OnlineStoreMicroservices.ShoppingCart.Features.Notifications.DistributeCustomerBasket;
+using OnlineStoreMicroservices.Warehouse.Context;
+using OnlineStoreMicroservices.Warehouse.Features.Commands.SaveUserProducts;
+using OnlineStoreMicroservices.Warehouse.Services;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -17,7 +17,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Services
     public class EventConsumerService : IHostedService
     {
         private readonly IServiceScopeFactory _scopeFactory;
-        private AccountantDbContext dbContext;
+        private WarehouseDbContext dbContext;
         private IMediator mediator;
         private IConnection connection;
         private IModel channel;
@@ -28,7 +28,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Services
         {
             _scopeFactory = scopeFactory;
             var scope = _scopeFactory.CreateScope();
-            dbContext = scope.ServiceProvider.GetRequiredService<AccountantDbContext>();
+            dbContext = scope.ServiceProvider.GetRequiredService<WarehouseDbContext>();
             mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
             mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
             var factory = new ConnectionFactory() { HostName = "localhost" };
@@ -41,7 +41,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Services
         {
             Task.Run(() =>
             {
-                channel.BasicConsume(queue: "UpdateOrder_AccountantsDepartment",
+                channel.BasicConsume(queue: "UpdateOrder_Warehouse",
                                    autoAck: true,
                                    consumer: consumer);
 
@@ -53,7 +53,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Services
                     var customerToCreation = mapper.Map<CustomerBasketExternal, UserBasketForCreationDto>(customerBasketExternal);
                     if (!string.IsNullOrWhiteSpace(message))
                     {
-                        await mediator.Send(new SaveCustomerProductsCommand() { UserBasket = customerToCreation });
+                        await mediator.Send(new SaveUserProductsCommand() { UserBasket = customerToCreation });
                     }
                 };
             });

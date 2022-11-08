@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OnlineStoreMicroservices.AccountantsDepartment.Context;
 using OnlineStoreMicroservices.AccountantsDepartment.Context.Abstract;
+using OnlineStoreMicroservices.AccountantsDepartment.Services;
+using OnlineStoreMicroservices.MessageBus.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +47,8 @@ namespace OnlineStoreMicroservices.AccountantsDepartment
             services.AddTransient<IAccountantDbContext, AccountantDbContext>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMessageBus();
+            services.AddHostedService<EventConsumerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

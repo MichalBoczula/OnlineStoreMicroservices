@@ -18,6 +18,10 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Commands.CreateOrder
         {
             profile.CreateMap<ShoppingBasketForCreationDto, ShoppingBasket>()
                 .ForMember(x => x.BasketProducts, prop => prop.Ignore());
+
+            profile.CreateMap<ShoppingBasket, ShoppingBasketForCreationDto>()
+                .ForMember(x => x.DiscountCouponId, prop => prop.Ignore())
+                .ForMember(x => x.Total, prop => prop.Ignore());
         }
     }
 }

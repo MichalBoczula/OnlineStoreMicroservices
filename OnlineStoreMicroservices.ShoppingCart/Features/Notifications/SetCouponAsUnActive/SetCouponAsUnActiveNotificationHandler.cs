@@ -6,12 +6,13 @@ using OnlineStoreMicroservices.ShoppingCart.Features.Services.SetCouponAsUnActiv
 using System.Threading;
 using System.Threading.Tasks;
 using OnlineStoreMicroservices.ShoppingCart.Features.Base;
+using AutoMapper;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Features.Notifications.SetCouponAsUnActive
 {
     public class SetCouponAsUnActiveNotificationHandler : NotificationBase, INotificationHandler<SetCouponAsUnActiveNotification>
     {
-        public SetCouponAsUnActiveNotificationHandler(IMessageService messageService) : base(messageService)
+        public SetCouponAsUnActiveNotificationHandler(IMessageService messageService, IMapper mapper) : base(messageService, mapper)
         {
         }
 
@@ -22,7 +23,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Notifications.SetCoupon
                  { "UpdateDiscountCoupon", "coupon" },
              };
             var exchange = "OnlineStoreMicroServicesExchange";
-            this.messageService.SendMessage(notification.DiscountCouponIntegrationId, shoppingCartHeader, exchange);
+            this._messageService.SendMessage(notification.DiscountCouponIntegrationId, shoppingCartHeader, exchange);
         }
     }
 }

@@ -21,4 +21,8 @@
 	  <Folder Include="Features\Notifications\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\OnlineStoreMicroservices.MessageBus\OnlineStoreMicroservices.MessageBus.csproj" />
+	</ItemGroup>
+
 </Project>

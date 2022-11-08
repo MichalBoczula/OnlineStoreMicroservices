@@ -11,11 +11,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OnlineStoreMicroservices.Warehouse.Context;
 using OnlineStoreMicroservices.Warehouse.Context.Abstract;
+using OnlineStoreMicroservices.MessageBus.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using OnlineStoreMicroservices.AccountantsDepartment.Services;
 
 namespace OnlineStoreMicroservices.Warehouse
 {
@@ -45,6 +47,8 @@ namespace OnlineStoreMicroservices.Warehouse
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient<IWarehouseDbContext, WarehouseDbContext>();
+            services.AddMessageBus();
+            services.AddHostedService<EventConsumerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

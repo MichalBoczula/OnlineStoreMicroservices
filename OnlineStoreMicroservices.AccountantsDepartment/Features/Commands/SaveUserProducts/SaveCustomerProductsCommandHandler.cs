@@ -45,10 +45,7 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
 
                     await _context.BasketProducts.AddRangeAsync(basketProducts);
 
-                    var userBill = _mapper.Map<UserBill>(request.UserBasket.UserBillRef);
-                    userBill.UserBasketId = userBasket.Id;
-
-                    await _context.UserBills.AddAsync(userBill);
+                    //await CalculateUserBill(request, userBasket, cancellationToken);
 
                     await _context.SaveChangesAsync(cancellationToken);
 
@@ -64,6 +61,28 @@ namespace OnlineStoreMicroservices.AccountantsDepartment.Features.Commands.SaveU
             }
 
             return result;
+        }
+
+        private async Task CalculateUserBill(SaveCustomerProductsCommand request, UserBasket userBasket, CancellationToken cancellationToken)
+        {
+            UserBill userBill;
+            if (request.UserBasket.UserBillRef != null)
+            {
+                userBill = _mapper.Map<UserBill>(request.UserBasket.UserBillRef);
+                userBill.UserBasketId = userBasket.Id;
+            }
+            else
+            {
+                userBill = new UserBill()
+                {
+                    Quantity = 111,
+                    Total = 111
+                };
+            }
+
+            await _context.UserBills.AddAsync(userBill);
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }
