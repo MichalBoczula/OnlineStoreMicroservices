@@ -32,7 +32,7 @@ namespace OnlineStoreMicroservices.ShoppingCart.Behaviors
 
                 if (createOrderCommandResult.IsDiscount)
                 {
-                    await _mediator.Publish(new SetCouponAsUnActiveNotification()
+                    await _mediator.Publish(new SetCouponAsUnActiveCommand()
                     {
                         DiscountCouponIntegrationId = createOrderCommandResult.DiscoutCouponIntegrationId
                     });

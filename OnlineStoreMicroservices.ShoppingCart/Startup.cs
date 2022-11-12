@@ -11,6 +11,9 @@ using OnlineStoreMicroservices.MessageBus.Dependencies;
 using OnlineStoreMicroservices.ShoppingCart.Behaviors;
 using OnlineStoreMicroservices.ShoppingCart.Context;
 using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
+using OnlineStoreMicroservices.ShoppingCart.Service;
+using OnlineStoreMicroservices.ShoppingCart.Service.Abstract;
+using System;
 using System.Reflection;
 
 namespace OnlineStoreMicroservices.ShoppingCart
@@ -42,8 +45,9 @@ namespace OnlineStoreMicroservices.ShoppingCart
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             ValidatorOptions.Global.LanguageManager.Enabled = false;
             services.AddMessageBus();
-
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddHttpClient<ISynchNotificationService, SynchNotificationService>();
+            services.AddTransient<ISynchNotificationService, SynchNotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

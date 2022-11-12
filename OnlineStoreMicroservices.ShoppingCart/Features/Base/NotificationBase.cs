@@ -10,8 +10,8 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Base
 
         public NotificationBase(IMessageService messageService, IMapper mapper)
         {
-            _messageService = messageService;
-            _mapper = mapper;
+            this._messageService = messageService;
+            this._mapper = mapper;
         }
     }
 }

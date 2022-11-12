@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OnlineStoreMicroservices.ShoppingCart.Context.Abstract;
+using OnlineStoreMicroservices.ShoppingCart.Service.Abstract;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Features.Base
 {
@@ -7,6 +8,12 @@ namespace OnlineStoreMicroservices.ShoppingCart.Features.Base
     {
         protected readonly IShoppingCartDbContext _context;
         protected readonly IMapper _mapper;
+        protected readonly ISynchNotificationService _synchNotificationService;
+
+        public QueryBase(ISynchNotificationService synchNotificationService)
+        {
+            _synchNotificationService = synchNotificationService;
+        }
 
         public QueryBase(IShoppingCartDbContext context, IMapper mapper)
         {

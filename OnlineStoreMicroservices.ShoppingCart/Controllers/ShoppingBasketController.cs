@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using MessageBus.Services.Interfaces;
 
 using OnlineStoreMicroservices.ShoppingCart.Features.Services.SetCouponAsUnActive;
+using System;
+using OnlineStoreMicroservices.ShoppingCart.Features.Queries.GetDiscountCoupons;
 
 namespace OnlineStoreMicroservices.ShoppingCart.Controllers
 {
@@ -48,6 +50,20 @@ namespace OnlineStoreMicroservices.ShoppingCart.Controllers
                 }
             });
             return Ok();
+        }
+
+        [HttpGet("GetCoupons")]
+        public async Task<ActionResult> GetShoppingBasketByIdAsync()
+        {
+            var result = await Mediator.Send(new GetDiscountCouponsQuery());
+            return Ok(result);
+        }
+
+        [HttpPut("SetCouponAsUnActive")]
+        public async Task<ActionResult> GetShoppingBasketByIdAsync([FromBody] string integrationId)
+        {
+            var result = await Mediator.Send(new SetCouponAsUnActiveCommand() { DiscountCouponIntegrationId = integrationId });
+            return Ok(result);
         }
     }
 }
